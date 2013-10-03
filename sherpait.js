@@ -11,16 +11,16 @@ if (typeof jQuery == 'undefined') {
 function runthis() {
 	$('<div/>', {
 			'id': 'waiting',
-			html: '<div id="loading"><p><img src="http://localhost/~damyantiandowen/sherpait/ajax-loader.gif" /><br />SherpaIT is checking Sherpa/Romeo for information, please wait</p>'
+			html: '<div id="loading"><p><img src="http://demonstrators.ostephens.com/sherpa-it/ajax-loader.gif" /><br />Sherpa-It is checking Sherpa/Romeo for information, please wait</p>'
 	}).insertAfter('div.page-header');
 	$('<div/>', {
 			'class': 'romeolicence',
-			html: '<div style="font-size:smaller;">This data is sourced from Sherpa/Romeo and licensed under a <a href="http://creativecommons.org/licenses/by-nc-sa/2.5/">Creative Commons Attribution-NonCommercial-ShareAlike 2.5 License</a>.</div><a href="http://www.sherpa.ac.uk/RoMEO.php"><img src="http://localhost/~damyantiandowen/sherpait/sherparomeo.jpg" /></a>'
+			html: '<div style="font-size:smaller;">This data is sourced from Sherpa/Romeo and licensed under a <a href="http://creativecommons.org/licenses/by-nc-sa/2.5/">Creative Commons Attribution-NonCommercial-ShareAlike 2.5 License</a>.</div><a href="http://www.sherpa.ac.uk/RoMEO.php"><img src="http://demonstrators.ostephens.com/sherpa-it/sherparomeo.jpg" /></a>'
 	}).insertAfter('div.page-header');
 	$("dd:contains('ISSN:')").each(function() {
 		var items = [];
 		var arr = $(this).text().match(/ISSN:(.*)/);
-		$.getJSON('http://localhost/~damyantiandowen/sherpait/sherpait.php?issn=' + arr[1] + '&callback=?', function(data) {
+		$.getJSON('http://demonstrators.ostephens.com/sherpa-it/sherpait.php?issn=' + arr[1] + '&callback=?', function(data) {
 			console.log(data);
 			if (data.Error) {
 				items.push('<strong>' + data.Error + '</strong>');
