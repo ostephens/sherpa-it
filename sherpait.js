@@ -17,31 +17,50 @@ function runthis() {
 			'class': 'romeolicence',
 			html: '<div style="font-size:smaller;">This data is sourced from Sherpa/Romeo and licensed under a <a href="http://creativecommons.org/licenses/by-nc-sa/2.5/">Creative Commons Attribution-NonCommercial-ShareAlike 2.5 License</a>.</div><a href="http://www.sherpa.ac.uk/RoMEO.php"><img src="http://demonstrators.ostephens.com/kbplus/sherpa-it/sherparomeo.jpg" /></a>'
 	}).insertAfter('div.page-header');
-	$("dd:contains('ISSN:')").each(function() {
-		var items = [];
-		var arr = $(this).text().match(/ISSN:(.*)/);
-		$.getJSON('http://demonstrators.ostephens.com/kbplus/sherpa-it/sherpait.php?issn=' + arr[1] + '&callback=?', function(data) {
-			console.log(data);
-			if (data.Error) {
-				items.push('<strong>' + data.Error + '</strong>');
-			} else {
-				items.push('<strong>');
-				items.push('Sherpa/RoMEO Information for "' + arr[1] + ' (' + data.jtitle + ')' + '"</strong>');
-				items.push('<ul>');
-				$.each(data.publishers, function(key, val) {
-					items.push('<li id="' + val.publisher + '"><strong>Publisher:</strong> ' + val.publisher + '</li>');
-					items.push('<li id="' + val.colour + '"><strong>RoMEO:</strong> This is a RoMEO <a href="http://www.sherpa.ac.uk/romeo/definitions.php#colours">' + val.colour + '</a> journal</li>');
+	if ($("dd:contains('ISSN:')").length > 0) {
+		$("dd:contains('ISSN:')").each(function() {
+			var items = [];
+			var arr = $(this).text().match(/ISSN:(.*)/);
+			if (arr.length > 1) {
+				$.getJSON('http://demonstrators.ostephens.com/kbplus/sherpa-it/sherpait.php?issn=' + arr[1] + '&callback=?', function(data) {
+					console.log(data);
+					if (data.Error) {
+						items.push('<strong>' + data.Error + '</strong>');
+					} else {
+						items.push('<strong>');
+						items.push('Sherpa/RoMEO Information for "' + arr[1] + ' (' + data.jtitle + ')' + '"</strong>');
+						items.push('<ul>');
+						$.each(data.publishers, function(key, val) {
+							items.push('<li id="' + val.publisher + '"><strong>Publisher:</strong> ' + val.publisher + '</li>');
+							items.push('<li id="' + val.colour + '"><strong>RoMEO:</strong> This is a RoMEO <a href="http://www.sherpa.ac.uk/romeo/definitions.php#colours">' + val.colour + '</a> journal</li>');
+						});
+						items.push('</ul>');
+					}
+					console.log(items);
+					$html = items.join('');
+					console.log($html);
+					$('<div/>', {
+							'class': 'sherpait',
+							html: $html
+					}).insertAfter('div.page-header');
+					$("#waiting").hide();
 				});
-				items.push('</ul>');
+			} else {
+				$('<div/>', {
+							'class': 'sherpait',
+							html: "Could not find an ISSN to use for Sherpa/RoMEO lookup"
+					}).insertAfter('div.page-header');
+					$("#waiting").hide();
+					$(".romeolicence").hide();
 			}
-			console.log(items);
-			$html = items.join('');
-			console.log($html);
-			$('<div/>', {
+		})
+	} else {
+		$('<div/>', {
 					'class': 'sherpait',
-					html: $html
+					html: "Could not find an ISSN to use for Sherpa/RoMEO lookup"
 			}).insertAfter('div.page-header');
 			$("#waiting").hide();
-		});
-	})
+			$(".romeolicence").hide();
+	}
+
 }
