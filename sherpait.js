@@ -31,7 +31,7 @@ function runthis() {
 			var items = [];
 			$.each(data.journals, function(j, journal) {
 				if (journal.Error) {
-					items.push('<strong>' + journal.Error + '</strong>');
+					items.push('<strong>' + journal.Error + '</strong><br />');
 				} else {
 					items.push('<strong>');
 					items.push('Sherpa/RoMEO Information for ISSN: "' + journal.issn + ' (' + journal.jtitle + ')' + '"</strong><br />');
@@ -52,7 +52,7 @@ function runthis() {
 			$('<div/>', {
 			'class': 'romeolicence',
 			html: '<div style="font-size:smaller;">This data is sourced from Sherpa/Romeo and licensed under a <a href="http://creativecommons.org/licenses/by-nc-sa/2.5/">Creative Commons Attribution-NonCommercial-ShareAlike 2.5 License</a>.</div><a href="http://www.sherpa.ac.uk/RoMEO.php"><img src="http://demonstrators.ostephens.com/kbplus/sherpa-it/sherparomeo.jpg" /></a>'
-	}).insertAfter('div.page-header');
+	}).insertAfter('div.sherpait');
 			$("#waiting").hide();
 		});
 	} else {
