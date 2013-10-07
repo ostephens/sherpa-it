@@ -49,10 +49,6 @@ foreach ($issns as $issn) {
 	}
 	$json_all[] = $json;
 }
-error_log(count($json_all));
-if (count($json_all) > 1) {
-	error_log("Found multiple journals on Sherpa. ISSNs were: ".join(",",$issns));
-}
 
 $json_out[journals] = $json_all;
 json_out($json_out);
