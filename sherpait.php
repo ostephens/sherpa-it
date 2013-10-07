@@ -1,5 +1,6 @@
 <?php
-$config = parse_ini_file("sherpait.ini");
+## Change next line with path to ini file. Ensure the ini file is not accessible via the public web
+$config = parse_ini_file("/ini/sherpait.ini");
 $baseurl = $config["romeobaseurl"];
 $apikey = $config["romeoapikey"];
 $issns = explode(",",$_GET["issns"]);
