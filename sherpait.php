@@ -1,6 +1,6 @@
 <?php
 ## Change next line with path to ini file. Ensure the ini file is not accessible via the public web
-$config = parse_ini_file("/ini/sherpait.ini");
+$config = parse_ini_file("ini/sherpait.ini");
 $baseurl = $config["romeobaseurl"];
 $apikey = $config["romeoapikey"];
 $issns = explode(",",$_GET["issns"]);
@@ -15,6 +15,7 @@ foreach ($issns as $issn) {
 	$name = "";
 	$colour = "";
 	$url = $baseurl."?versions=all&issn=".$issn."&ak=".$apikey;
+	error_log($url);
 	$curl_handle=curl_init();
 	curl_setopt($curl_handle,CURLOPT_URL,$url);
 	curl_setopt($curl_handle,CURLOPT_RETURNTRANSFER,true);
@@ -48,7 +49,7 @@ foreach ($issns as $issn) {
 	}
 	$json_all[] = $json;
 }
-
+error_log(count($json_all));
 if (count($json_all) > 1) {
 	error_log("Found multiple journals on Sherpa. ISSNs were: ".join(",",$issns));
 }
