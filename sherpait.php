@@ -1,4 +1,7 @@
 <?php
+$config = parse_ini_file("sherpait.ini");
+$baseurl = $config["romeobaseurl"];
+$apikey = $config["romeoapikey"];
 $issns = explode(",",$_GET["issns"]);
 //Need to loop round and create a json entry for each thing returned if not duplicated
 //Then return complete JSON to sherpait.js to parse & display
@@ -10,7 +13,7 @@ foreach ($issns as $issn) {
 	$sherpa_json = array();
 	$name = "";
 	$colour = "";
-	$url = 'http://www.sherpa.ac.uk/romeo/api29/issn/'.$issn.'/';
+	$url = $baseurl."?versions=all&issn=".$issn."&ak=".$apikey;
 	$curl_handle=curl_init();
 	curl_setopt($curl_handle,CURLOPT_URL,$url);
 	curl_setopt($curl_handle,CURLOPT_RETURNTRANSFER,true);
